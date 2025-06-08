@@ -41,4 +41,25 @@ EOL
 # Set permissions
 chmod +x scripts/*.sh
 
-echo "Setup completed successfully!" 
+# Persist Hugging Face token environment variable across sessions
+HUGGINGFACE_ENV_LINE='export HUGGINGFACE_TOKEN=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'
+
+# Add to ~/.bashrc if not already present
+if ! grep -Fxq "$HUGGINGFACE_ENV_LINE" ~/.bashrc; then
+    echo "$HUGGINGFACE_ENV_LINE" >> ~/.bashrc
+    echo "Added HUGGINGFACE_TOKEN to ~/.bashrc for persistence."
+else
+    echo "HUGGINGFACE_TOKEN already set in ~/.bashrc."
+fi
+
+# Export for current session
+export HUGGINGFACE_TOKEN=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
+
+echo "Setup completed successfully! Hugging Face token environment variable set and persisted."
+
+# Run start_runpod.sh and start.sh scripts automatically
+echo "Running start_runpod.sh..."
+./scripts/start_runpod.sh
+
+echo "Running start.sh..."
+./scripts/start.sh
