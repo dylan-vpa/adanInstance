@@ -72,18 +72,18 @@ A high-performance, scalable system for running and fine-tuning large language m
    python3 -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
-   uvicorn main:app --host 0.0.0.0 --port 8003
+   uvicorn main:app --host 0.0.0.0 --port 8004
    ```
 
 5. **Access the services**:
    - vLLM server: http://localhost:8000
-   - Moderador API: http://localhost:8003
+   - Moderador API: http://localhost:8004
 
 ## 📡 API Endpoints
 
 ### Base URL
 - Production: `https://api.server.adan.run`
-- Development: `http://localhost:8003`
+- Development: `http://localhost:8004`
 
 ### Endpoints
 
@@ -122,7 +122,7 @@ GPU_MEMORY_UTILIZATION=0.9
 
 # API Server
 API_HOST=0.0.0.0
-API_PORT=8003
+API_PORT=8004
 VLLM_SERVER_URL=http://localhost:8000
 ```
 
@@ -137,7 +137,7 @@ server {
     server_name api.server.adan.run;
     
     location / {
-        proxy_pass http://localhost:8003;
+        proxy_pass http://localhost:8004;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
@@ -154,7 +154,7 @@ server {
     }
     
     location /api {
-        proxy_pass http://localhost:8003;
+        proxy_pass http://localhost:8004;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }

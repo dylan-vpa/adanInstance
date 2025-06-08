@@ -35,7 +35,7 @@ cat > moderador-api/.env << EOL
 VLLM_HOST=localhost
 VLLM_PORT=8000
 API_HOST=0.0.0.0
-API_PORT=8003
+API_PORT=8004
 EOL
 
 # Set permissions

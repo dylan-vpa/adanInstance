@@ -50,7 +50,7 @@ services:
   moderador-api:
     build: ./moderador-api
     ports:
-      - "${PORT_API:-8003}:8003"
+      - "${PORT_API:-8004}:8004"
     volumes:
       - ./models:/app/models
       - ./fine-tuning:/app/fine-tuning
@@ -58,7 +58,7 @@ services:
       - VLLM_HOST=vllm-server
       - VLLM_PORT=8000
       - API_HOST=0.0.0.0
-      - API_PORT=8003
+      - API_PORT=8004
       - HUGGING_FACE_TOKEN=${HUGGING_FACE_TOKEN}
       - RUNPOD_PUBLIC_IP=${RUNPOD_PUBLIC_IP}
     depends_on:

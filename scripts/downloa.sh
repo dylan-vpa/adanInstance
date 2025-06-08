@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Download model: mistralai/Devstral-Small-2505
-MODEL="mistralai/Devstral-Small-2505"
-MODEL_DIR="models/Devstral-Small-2505"
+# Download model: deepseek-ai/deepseek-coder-6.7b-instruct
+MODEL="deepseek-ai/deepseek-coder-6.7b-instruct"
+MODEL_DIR="models/deepseek-coder-6.7b-instruct"
 
 if [ ! -d "$MODEL_DIR" ]; then
     echo "Downloading model: $MODEL"
