@@ -23,9 +23,15 @@ if [ -z "$RUNPOD_GPU_ID" ]; then
     echo "Warning: No GPU ID provided by RunPod"
 fi
 
+# Build images
+echo "Building Docker images..."
+nvidia-docker build -t vllm-server ./vllm
+nvidia-docker build -t moderador-api ./moderador-api
+nvidia-docker build -t nginx ./nginx
+
 # Start services
 echo "Starting services..."
-docker-compose up -d
+nvidia-docker-compose up -d
 
 # Wait for services to be ready
 echo "Waiting for services to be ready..."
@@ -33,7 +39,7 @@ sleep 10
 
 # Check service status
 echo "Checking service status..."
-docker-compose ps
+nvidia-docker-compose ps
 
 # Print access information
 echo "Services are running!"
