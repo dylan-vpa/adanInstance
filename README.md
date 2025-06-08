@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![Docker](https://img.shields.io/badge/Docker-20.10%2B-blue)](https://www.docker.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.68%2B-green)](https://fastapi.tiangolo.com/)
 [![vLLM](https://img.shields.io/badge/vLLM-0.2%2B-orange)](https://github.com/vllm-project/vllm)
 
@@ -32,7 +31,7 @@ A high-performance, scalable system for running and fine-tuning large language m
 ├── 📂 scripts/              # Management scripts
 │   ├── 📄 manage.py        # Main management script
 │   └── 📄 download_model.py # Model download script
-├── 📄 docker-compose.yml    # Docker Compose configuration
+├── 📄 docker-compose.yml    # Docker Compose configuration (not used in local setup)
 └── 📄 README.md            # Project documentation
 ```
 
@@ -43,10 +42,8 @@ A high-performance, scalable system for running and fine-tuning large language m
 - 🔒 **Security**: Built-in content filtering and moderation
 - 🎯 **Fine-tuning**: Support for model fine-tuning
 - 🌐 **API**: RESTful API with FastAPI
-- 🐳 **Containerized**: Docker-based deployment
-- 📊 **Monitoring**: Integrated logging and metrics
 
-## 🛠️ Setup
+## 🛠️ Setup (Local without Docker)
 
 1. **Clone the repository**:
    ```bash
@@ -59,10 +56,28 @@ A high-performance, scalable system for running and fine-tuning large language m
    pip install -r requirements.txt
    ```
 
-3. **Start the management interface**:
+3. **Start the vLLM server**:
    ```bash
-   python scripts/manage.py
+   cd vllm
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r ../requirements.txt
+   python3 server.py
    ```
+
+4. **Start the moderador-api**:
+   Open a new terminal:
+   ```bash
+   cd moderador-api
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   uvicorn main:app --host 0.0.0.0 --port 8001
+   ```
+
+5. **Access the services**:
+   - vLLM server: http://localhost:8000
+   - Moderador API: http://localhost:8001
 
 ## 📡 API Endpoints
 
@@ -108,17 +123,7 @@ GPU_MEMORY_UTILIZATION=0.9
 # API Server
 API_HOST=0.0.0.0
 API_PORT=8001
-VLLM_SERVER_URL=http://vllm-server:8000
-```
-
-### Fine-tuning Configuration
-
-```python
-# fine-tuning/config/finetune_config.py
-base_model: str = "mistralai/Mixtral-8x7B-Instruct-v0.1"
-num_train_epochs: int = 3
-learning_rate: float = 2e-5
-per_device_train_batch_size: int = 4
+VLLM_SERVER_URL=http://localhost:8000
 ```
 
 ## 🌐 Nginx Configuration
@@ -132,7 +137,7 @@ server {
     server_name api.server.adan.run;
     
     location / {
-        proxy_pass http://moderador-api:8001;
+        proxy_pass http://localhost:8001;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
@@ -149,76 +154,17 @@ server {
     }
     
     location /api {
-        proxy_pass http://moderador-api:8001;
+        proxy_pass http://localhost:8001;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
 }
 ```
 
-## 🐳 Docker Compose
-
-```yaml
-version: '3.8'
-
-services:
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/ssl:/etc/nginx/ssl
-      - ./nginx/logs:/var/log/nginx
-    depends_on:
-      - moderador-api
-    networks:
-      - adan-network
-
-  vllm-server:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./models:/models
-      - ./fine-tuning/models:/fine-tuning/models
-    environment:
-      - MODEL_NAME=mistralai/Mixtral-8x7B-Instruct-v0.1
-      - MODEL_PATH=/models
-      - GPU_MEMORY_UTILIZATION=0.9
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    networks:
-      - adan-network
-
-  moderador-api:
-    build: ./moderador-api
-    ports:
-      - "8001:8001"
-    volumes:
-      - ./models:/models
-      - ./fine-tuning:/fine-tuning
-    environment:
-      - VLLM_SERVER_URL=http://vllm-server:8000
-    networks:
-      - adan-network
-
-networks:
-  adan-network:
-    driver: bridge
-```
-
 ## 📋 Requirements
 
 - Python 3.8+
 - CUDA-compatible GPU
-- Docker and Docker Compose
-- NVIDIA Container Toolkit
 
 ## 👨‍💻 Development
 
@@ -256,8 +202,8 @@ networks:
    - Use a smaller model or batch size
 
 2. **API Connection Issues**
-   - Check if all services are running: `docker-compose ps`
-   - Verify network connectivity: `docker network inspect adan-network`
+   - Check if all services are running locally
+   - Verify network connectivity and ports
 
 3. **Fine-tuning Errors**
    - Ensure sufficient GPU memory
@@ -266,4 +212,4 @@ networks:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

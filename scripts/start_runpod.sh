@@ -23,23 +23,47 @@ if [ -z "$RUNPOD_GPU_ID" ]; then
     echo "Warning: No GPU ID provided by RunPod"
 fi
 
-# Build images
-echo "Building Docker images..."
-nvidia-docker build -t vllm-server ./vllm
-nvidia-docker build -t moderador-api ./moderador-api
-nvidia-docker build -t nginx ./nginx
+# Start vLLM server locally
+echo "Starting vLLM server locally..."
+cd vllm
 
-# Start services
-echo "Starting services..."
-nvidia-docker-compose up -d
+# Create and activate virtual environment if not exists
+if [ ! -d "venv" ]; then
+    python3 -m venv venv
+fi
+source venv/bin/activate
+
+# Install dependencies
+pip install -r ../requirements.txt
+
+# Run the vLLM server in background
+nohup python3 server.py > vllm.log 2>&1 &
+
+cd ..
+
+# Start moderador-api locally
+echo "Starting moderador-api locally..."
+cd moderador-api
+
+# Create and activate virtual environment if not exists
+if [ ! -d "venv" ]; then
+    python3 -m venv venv
+fi
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+uvicorn main:app --host 0.0.0.0 --port 8001 &
+
+cd ..
+
+# Optionally start nginx locally if needed
+# echo "Starting nginx..."
+# sudo systemctl start nginx
 
 # Wait for services to be ready
 echo "Waiting for services to be ready..."
 sleep 10
-
-# Check service status
-echo "Checking service status..."
-nvidia-docker-compose ps
 
 # Print access information
 echo "Services are running!"
@@ -47,5 +71,5 @@ echo "API available at: http://${RUNPOD_PUBLIC_IP}:${PORT_API}"
 echo "vLLM server at: http://${RUNPOD_PUBLIC_IP}:${PORT_VLLM}"
 echo "Nginx at: http://${RUNPOD_PUBLIC_IP}:${PORT_HTTP}"
 
-# Keep the container running
-tail -f nginx/logs/access.log 
+# Keep the script running to keep services alive
+tail -f vllm/vllm.log

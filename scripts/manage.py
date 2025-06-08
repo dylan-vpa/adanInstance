@@ -238,17 +238,67 @@ class {agent_name.title()}Agent(BaseAgent):
         choice = self.get_user_input("Select an option (1-5):", ["1", "2", "3", "4", "5"])
         
         if choice == "1":
-            subprocess.run(["docker-compose", "up", "-d"])
+            # Start vLLM server
+            print("Starting vLLM server...")
+            subprocess.Popen([
+                "bash", "-c",
+                "cd vllm && "
+                "if [ ! -d venv ]; then python3 -m venv venv; fi && "
+                "source venv/bin/activate && "
+                "pip install -r ../requirements.txt && "
+                "nohup python3 server.py > vllm.log 2>&1 &"
+            ], shell=True)
+            
+            # Start moderador-api
+            print("Starting moderador-api...")
+            subprocess.Popen([
+                "bash", "-c",
+                "cd moderador-api && "
+                "if [ ! -d venv ]; then python3 -m venv venv; fi && "
+                "source venv/bin/activate && "
+                "pip install -r requirements.txt && "
+                "uvicorn main:app --host 0.0.0.0 --port 8001 &"
+            ], shell=True)
+            
         elif choice == "2":
-            subprocess.run(["docker-compose", "down"])
+            # Stop services by killing processes
+            print("Stopping services...")
+            subprocess.run(["pkill", "-f", "python3 server.py"])
+            subprocess.run(["pkill", "-f", "uvicorn"])
+            
         elif choice == "3":
-            subprocess.run(["docker-compose", "restart"])
+            # Restart services
+            print("Restarting services...")
+            subprocess.run(["pkill", "-f", "python3 server.py"])
+            subprocess.run(["pkill", "-f", "uvicorn"])
+            # Start again
+            subprocess.Popen([
+                "bash", "-c",
+                "cd vllm && "
+                "if [ ! -d venv ]; then python3 -m venv venv; fi && "
+                "source venv/bin/activate && "
+                "pip install -r ../requirements.txt && "
+                "nohup python3 server.py > vllm.log 2>&1 &"
+            ], shell=True)
+            subprocess.Popen([
+                "bash", "-c",
+                "cd moderador-api && "
+                "if [ ! -d venv ]; then python3 -m venv venv; fi && "
+                "source venv/bin/activate && "
+                "pip install -r requirements.txt && "
+                "uvicorn main:app --host 0.0.0.0 --port 8001 &"
+            ], shell=True)
+            
         elif choice == "4":
             service = self.get_user_input(
-                "Enter service name (nginx/vllm-server/moderador-api):",
-                ["nginx", "vllm-server", "moderador-api"]
+                "Enter service name (vllm/moderador-api):",
+                ["vllm", "moderador-api"]
             )
-            subprocess.run(["docker-compose", "logs", "-f", service])
+            if service == "vllm":
+                subprocess.run(["tail", "-f", "vllm/vllm.log"])
+            elif service == "moderador-api":
+                subprocess.run(["journalctl", "-u", "uvicorn", "-f"])
+            
         elif choice == "5":
             return
 

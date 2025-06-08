@@ -1,22 +1,43 @@
 #!/bin/bash
 
-# Start vLLM server
-echo "Starting vLLM server..."
+# Start vLLM server locally
+echo "Starting vLLM server locally..."
 cd vllm
-docker-compose up -d
+
+# Create and activate virtual environment if not exists
+if [ ! -d "venv" ]; then
+    python3 -m venv venv
+fi
+source venv/bin/activate
+
+# Install dependencies
+pip install -r ../requirements.txt
+
+# Run the vLLM server in background
+nohup python3 server.py > vllm.log 2>&1 &
+
+cd ..
 
 # Wait for vLLM server to be ready
 echo "Waiting for vLLM server to be ready..."
 sleep 10
 
-# Start moderador-api
+# Start moderador-api locally
 echo "Starting moderador-api..."
-cd ../moderador-api
-python3 -m venv venv
+cd moderador-api
+
+# Create and activate virtual environment if not exists
+if [ ! -d "venv" ]; then
+    python3 -m venv venv
+fi
 source venv/bin/activate
+
 pip install -r requirements.txt
+
 uvicorn main:app --host 0.0.0.0 --port 8001 &
+
+cd ..
 
 echo "All services started successfully!"
 echo "vLLM server running on http://localhost:8000"
-echo "Moderador API running on http://localhost:8001" 
+echo "Moderador API running on http://localhost:8001"
