@@ -31,14 +31,13 @@ then
     pip install huggingface_hub
 fi
 
-# Check if already logged in
-if ! huggingface-cli whoami &> /dev/null
-then
-    echo "Please enter your Hugging Face API token:"
-    read -s HF_TOKEN
-    huggingface-cli login --token $HF_TOKEN
+# Use HUGGINGFACE_TOKEN environment variable for automatic login if set
+if [ -n "$HUGGINGFACE_TOKEN" ]; then
+    echo "Using HUGGINGFACE_TOKEN environment variable for Hugging Face login..."
+    huggingface-cli login --token $HUGGINGFACE_TOKEN
 else
-    echo "Already logged in to Hugging Face."
+    echo "Using hardcoded Hugging Face token for login..."
+    huggingface-cli login --token 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
 fi
 
 # Start vLLM server locally
