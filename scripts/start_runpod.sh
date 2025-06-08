@@ -36,8 +36,9 @@ if [ -n "$HUGGINGFACE_TOKEN" ]; then
     echo "Using HUGGINGFACE_TOKEN environment variable for Hugging Face login..."
     huggingface-cli login --token $HUGGINGFACE_TOKEN
 else
-    echo "Using hardcoded Hugging Face token for login..."
-    huggingface-cli login --token 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
+    echo "HUGGINGFACE_TOKEN environment variable not set. Please set it in your RunPod instance environment variables."
+    echo "Exiting to avoid unauthorized access."
+    exit 1
 fi
 
 # Start vLLM server locally
