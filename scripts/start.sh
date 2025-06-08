@@ -34,10 +34,10 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-uvicorn main:app --host 0.0.0.0 --port 8002 &
+uvicorn main:app --host 0.0.0.0 --port 8001 &
 
 cd ..
 
 echo "All services started successfully!"
 echo "vLLM server running on http://localhost:8000"
-echo "Moderador API running on http://localhost:8002"
+echo "Moderador API running on http://localhost:8001"
