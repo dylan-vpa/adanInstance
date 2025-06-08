@@ -23,6 +23,24 @@ if [ -z "$RUNPOD_GPU_ID" ]; then
     echo "Warning: No GPU ID provided by RunPod"
 fi
 
+# Hugging Face login for gated model access
+echo "Logging into Hugging Face CLI..."
+if ! command -v huggingface-cli &> /dev/null
+then
+    echo "huggingface-cli could not be found, installing..."
+    pip install huggingface_hub
+fi
+
+# Check if already logged in
+if ! huggingface-cli whoami &> /dev/null
+then
+    echo "Please enter your Hugging Face API token:"
+    read -s HF_TOKEN
+    huggingface-cli login --token $HF_TOKEN
+else
+    echo "Already logged in to Hugging Face."
+fi
+
 # Start vLLM server locally
 echo "Starting vLLM server locally..."
 cd vllm
