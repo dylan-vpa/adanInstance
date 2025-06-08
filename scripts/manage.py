@@ -246,7 +246,7 @@ class {agent_name.title()}Agent(BaseAgent):
                 "if [ ! -d venv ]; then python3 -m venv venv; fi && "
                 "source venv/bin/activate && "
                 "pip install -r ../requirements.txt && "
-                "nohup python3 server.py > vllm.log 2>&1 &"
+                "nohup vllm serve --model ${MODEL_NAME:-\"mistralai/Mixtral-8x7B-Instruct-v0.1\"} --port 8000 > vllm.log 2>&1 &"
             ], shell=True)
             
             # Start moderador-api
@@ -263,13 +263,13 @@ class {agent_name.title()}Agent(BaseAgent):
         elif choice == "2":
             # Stop services by killing processes
             print("Stopping services...")
-            subprocess.run(["pkill", "-f", "python3 server.py"])
+            subprocess.run(["pkill", "-f", "vllm serve"])
             subprocess.run(["pkill", "-f", "uvicorn"])
             
         elif choice == "3":
             # Restart services
             print("Restarting services...")
-            subprocess.run(["pkill", "-f", "python3 server.py"])
+            subprocess.run(["pkill", "-f", "vllm serve"])
             subprocess.run(["pkill", "-f", "uvicorn"])
             # Start again
             subprocess.Popen([
@@ -278,7 +278,7 @@ class {agent_name.title()}Agent(BaseAgent):
                 "if [ ! -d venv ]; then python3 -m venv venv; fi && "
                 "source venv/bin/activate && "
                 "pip install -r ../requirements.txt && "
-                "nohup python3 server.py > vllm.log 2>&1 &"
+                "nohup vllm serve --model ${MODEL_NAME:-\"mistralai/Mixtral-8x7B-Instruct-v0.1\"} --port 8000 > vllm.log 2>&1 &"
             ], shell=True)
             subprocess.Popen([
                 "bash", "-c",
@@ -330,4 +330,4 @@ class {agent_name.title()}Agent(BaseAgent):
 
 if __name__ == "__main__":
     manager = AdanManager()
-    manager.main_menu() 
+    manager.main_menu()
