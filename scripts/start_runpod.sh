@@ -9,7 +9,7 @@ fi
 export PORT_HTTP=${PORT_HTTP:-80}
 export PORT_HTTPS=${PORT_HTTPS:-443}
 export PORT_VLLM=${PORT_VLLM:-8000}
-export PORT_API=${PORT_API:-8001}
+export PORT_API=${PORT_API:-8002}
 
 # Create necessary directories
 mkdir -p models
@@ -71,7 +71,7 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-uvicorn main:app --host 0.0.0.0 --port 8001 &
+uvicorn main:app --host 0.0.0.0 --port 8002 &
 
 cd ..
 
