@@ -41,14 +41,23 @@ else
     exit 1
 fi
 
+echo "Current directory: $(pwd)"
 # Start vLLM server locally
 echo "Starting vLLM server locally..."
-cd vllm
+cd vllm || { echo "Failed to cd into vllm directory"; exit 1; }
+echo "Current directory after cd: $(pwd)"
 
 # Create and activate virtual environment if not exists
 if [ ! -d "venv" ]; then
+    echo "Creating virtual environment in $(pwd)/venv"
     python3 -m venv venv
 fi
+
+if [ ! -f "venv/bin/activate" ]; then
+    echo "Virtual environment activation script not found at venv/bin/activate"
+    exit 1
+fi
+
 source venv/bin/activate
 
 # Upgrade pip and install vllm and other dependencies
@@ -57,14 +66,14 @@ pip install vllm
 pip install -r ../requirements.txt
 
 # Verify vllm executable path
-VLLM_EXEC=./venv/bin/vllm
+VLLM_EXEC="$(pwd)/venv/bin/vllm"
 if [ ! -f "$VLLM_EXEC" ]; then
     echo "vllm executable not found at $VLLM_EXEC"
     exit 1
 fi
 
 # Run the vLLM server in background using vllm CLI from virtual environment
-nohup $VLLM_EXEC serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
+nohup "$VLLM_EXEC" serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
 
 cd ..
 
