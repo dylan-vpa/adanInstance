@@ -103,8 +103,19 @@ if [ ! -f "$VLLM_EXEC" ]; then
     exit 1
 fi
 
+# Download the model before starting the server
+echo "Downloading model ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"}..."
+python3 ../scripts/download_model.py --model ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --output ../models/mistralai-Mixtral-8x7B-Instruct-v0.1 --token $HUGGINGFACE_TOKEN
+
 # Run the vLLM server in background using vllm CLI from virtual environment
 nohup "$VLLM_EXEC" serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
+
+# Wait a few seconds for the server to start
+sleep 10
+
+# Send a test request to the vLLM server
+echo "Sending test request to vLLM server..."
+curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"text": "hola"}'
 
 cd ..
 
