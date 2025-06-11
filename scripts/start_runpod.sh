@@ -50,10 +50,16 @@ echo "Current directory after cd: $(pwd)"
 # Create and activate virtual environment if not exists
 if [ ! -d "venv" ]; then
     echo "Creating virtual environment in $(pwd)/venv"
+    # Try python3 -m venv first
     python3 -m venv venv
     if [ $? -ne 0 ]; then
-        echo "Failed to create virtual environment"
-        exit 1
+        echo "Failed to create virtual environment using python3 -m venv, trying virtualenv..."
+        # Try virtualenv as fallback
+        virtualenv venv
+        if [ $? -ne 0 ]; then
+            echo "Failed to create virtual environment using virtualenv"
+            exit 1
+        fi
     fi
 fi
 
