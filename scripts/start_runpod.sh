@@ -104,11 +104,13 @@ if [ ! -f "$VLLM_EXEC" ]; then
 fi
 
 # Download the model before starting the server
-echo "Downloading model ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"}..."
-python3 ../scripts/download_model.py --model ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --output ../models/mistralai-Mixtral-8x7B-Instruct-v0.1 --token $HUGGINGFACE_TOKEN
+# Using a lighter model for better performance
+LIGHT_MODEL="deepseek-ai/deepseek-coder-6.7b-instruct"
+echo "Downloading lighter model ${MODEL_NAME:-$LIGHT_MODEL}..."
+python3 ../scripts/download_model.py --model ${MODEL_NAME:-$LIGHT_MODEL} --output ../models/deepseek-coder-6.7b-instruct --token $HUGGINGFACE_TOKEN
 
 # Run the vLLM server in background using vllm CLI from virtual environment
-nohup "$VLLM_EXEC" serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
+nohup "$VLLM_EXEC" serve ${MODEL_NAME:-$LIGHT_MODEL} --port 8000 > vllm.log 2>&1 &
 
 # Wait a few seconds for the server to start
 sleep 10
