@@ -84,7 +84,7 @@ class {class_name}(BaseAgent):
             await self.initialize()
         prompt = input_data.get("prompt", "")
         outputs = self.generator(prompt, max_length=100, num_return_sequences=1)
-        return {"generated_text": outputs[0]["generated_text"]}
+        return {{{{"generated_text": outputs[0]["generated_text"]}}}}
 '''
 
 def create_agent_file(agent_name: str, description: str):
