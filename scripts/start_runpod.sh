@@ -51,7 +51,9 @@ if [ ! -d "venv" ]; then
 fi
 source venv/bin/activate
 
-# Install dependencies
+# Upgrade pip and install vllm and other dependencies
+pip install --upgrade pip
+pip install vllm
 pip install -r ../requirements.txt
 
 # Run the vLLM server in background using vllm CLI from virtual environment
