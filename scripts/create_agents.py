@@ -38,12 +38,12 @@ AGENTS = [
     ("jack", "Enterprise Sales Lead. Ventas enterprise y partnerships."),
     ("maya", "Support Operations Lead. Operaciones de soporte 24/7."),
     ("mila", "Scrum Master. Facilitación ágil y coordinación de equipos."),
-    ("noah", "Vicepresidente de Finanzas. Proyecciones financieras y análisis de riesgos."),
 ]
 
 AGENTS_DIR = os.path.join(os.path.dirname(__file__), "../moderador-api/agents/custom")
 
 AGENT_TEMPLATE = '''from typing import Dict, Any
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from ..base import BaseAgent
 from ..registry import AgentRegistry
 
@@ -56,21 +56,35 @@ class {class_name}(BaseAgent):
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.initialized = False
+        self.model_name = config.get("model_name", "deepseek-ai/deepseek-coder-6.7b-instruct")
+        self.tokenizer = None
+        self.model = None
+        self.generator = None
     
     async def initialize(self) -> None:
-        """Initialize the {class_name} agent."""
-        # TODO: Add initialization code
+        """Initialize the {class_name} agent with Hugging Face model."""
+        if self.initialized:
+            return
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        self.model = AutoModelForCausalLM.from_pretrained(self.model_name)
+        self.generator = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer)
         self.initialized = True
     
     async def validate(self, input_data: Dict[str, Any]) -> bool:
         """Validate the input data."""
-        # TODO: Add validation logic
+        if not self.initialized:
+            await self.initialize()
+        if "prompt" not in input_data:
+            return False
         return True
     
     async def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process the input and return results."""
-        # TODO: Add processing logic
-        return {{"result": "processed"}}
+        """Generate text based on the prompt using Hugging Face pipeline."""
+        if not self.initialized:
+            await self.initialize()
+        prompt = input_data.get("prompt", "")
+        outputs = self.generator(prompt, max_length=100, num_return_sequences=1)
+        return {"generated_text": outputs[0]["generated_text"]}
 '''
 
 def create_agent_file(agent_name: str, description: str):
