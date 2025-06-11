@@ -54,8 +54,8 @@ source venv/bin/activate
 # Install dependencies
 pip install -r ../requirements.txt
 
-# Run the vLLM server in background using vllm CLI
-nohup vllm serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
+# Run the vLLM server in background using python -m vllm CLI
+nohup python3 -m vllm serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
 
 cd ..
 
