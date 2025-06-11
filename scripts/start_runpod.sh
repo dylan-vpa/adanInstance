@@ -56,8 +56,15 @@ pip install --upgrade pip
 pip install vllm
 pip install -r ../requirements.txt
 
+# Verify vllm executable path
+VLLM_EXEC=./venv/bin/vllm
+if [ ! -f "$VLLM_EXEC" ]; then
+    echo "vllm executable not found at $VLLM_EXEC"
+    exit 1
+fi
+
 # Run the vLLM server in background using vllm CLI from virtual environment
-nohup ./venv/bin/vllm serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
+nohup $VLLM_EXEC serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} --port 8000 > vllm.log 2>&1 &
 
 cd ..
 

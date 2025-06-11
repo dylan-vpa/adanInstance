@@ -56,28 +56,15 @@ A high-performance, scalable system for running and fine-tuning large language m
    pip install -r requirements.txt
    ```
 
-3. **Start the vLLM server**:
+3. **Start the services using the start_runpod script**:
    ```bash
-   cd vllm
-   python3 -m venv venv
-   source venv/bin/activate
-   pip install -r ../requirements.txt
-   python3 server.py
+   ./scripts/start_runpod.sh
    ```
 
-4. **Start the moderador-api**:
-   Open a new terminal:
-   ```bash
-   cd moderador-api
-   python3 -m venv venv
-   source venv/bin/activate
-   pip install -r requirements.txt
-   uvicorn main:app --host 0.0.0.0 --port 8004
-   ```
-
-5. **Access the services**:
+4. **Access the services**:
    - vLLM server: http://localhost:8000
    - Moderador API: http://localhost:8004
+   cd adan-instance
 
 ## 📡 API Endpoints
 
