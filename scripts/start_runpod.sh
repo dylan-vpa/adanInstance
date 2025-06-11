@@ -51,10 +51,16 @@ echo "Current directory after cd: $(pwd)"
 if [ ! -d "venv" ]; then
     echo "Creating virtual environment in $(pwd)/venv"
     python3 -m venv venv
+    if [ $? -ne 0 ]; then
+        echo "Failed to create virtual environment"
+        exit 1
+    fi
 fi
 
 if [ ! -f "venv/bin/activate" ]; then
     echo "Virtual environment activation script not found at venv/bin/activate"
+    echo "Listing contents of venv/bin:"
+    ls -l venv/bin
     exit 1
 fi
 
@@ -62,13 +68,29 @@ source venv/bin/activate
 
 # Upgrade pip and install vllm and other dependencies
 pip install --upgrade pip
+if [ $? -ne 0 ]; then
+    echo "Failed to upgrade pip"
+    exit 1
+fi
+
 pip install vllm
+if [ $? -ne 0 ]; then
+    echo "Failed to install vllm"
+    exit 1
+fi
+
 pip install -r ../requirements.txt
+if [ $? -ne 0 ]; then
+    echo "Failed to install requirements"
+    exit 1
+fi
 
 # Verify vllm executable path
 VLLM_EXEC="$(pwd)/venv/bin/vllm"
 if [ ! -f "$VLLM_EXEC" ]; then
     echo "vllm executable not found at $VLLM_EXEC"
+    echo "Listing contents of venv/bin:"
+    ls -l venv/bin
     exit 1
 fi
 
