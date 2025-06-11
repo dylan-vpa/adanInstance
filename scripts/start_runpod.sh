@@ -113,10 +113,6 @@ nohup "$VLLM_EXEC" serve ${MODEL_NAME:-"mistralai/Mixtral-8x7B-Instruct-v0.1"} -
 # Wait a few seconds for the server to start
 sleep 10
 
-# Send a test request to the vLLM server
-echo "Sending test request to vLLM server..."
-curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d '{"text": "hola"}'
-
 cd ..
 
 # Start moderador-api locally
