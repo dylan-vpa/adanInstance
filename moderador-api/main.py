@@ -8,6 +8,7 @@ from controller import VLLMController
 from agents.registry import AgentRegistry
 from agents.moderator import ModeratorAgent
 from agents.custom.content_filter import ContentFilterAgent
+import moderador_api.agents.custom  # Import custom agents to register them
 
 # Load environment variables
 load_dotenv()
