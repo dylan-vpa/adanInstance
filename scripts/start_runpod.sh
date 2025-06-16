@@ -131,7 +131,11 @@ pip install -r requirements.txt
 
 pip install transformers
 
-uvicorn main:app --host 0.0.0.0 --port 8004 &
+export VLLM_HOST=localhost
+export VLLM_PORT=8000
+export PYTHONPATH=$(pwd)
+
+uvicorn main:app --host 0.0.0.0 --port 8004 > moderador-api.log 2>&1 &
 
 cd ..
 
