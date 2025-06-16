@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
     let usuario_id: string | undefined;
     let messagesRaw: Array<any> = [];
     let stream = true;
-    let model = 'Modelfile_Adan_CEO';
 
     if (contentType.includes('application/json')) {
       try {
@@ -14,7 +13,6 @@ export async function POST(request: NextRequest) {
         usuario_id = json.usuario_id;
         messagesRaw = json.messages;
         stream = json.stream === undefined ? true : Boolean(json.stream);
-        model = json.model || model;
       } catch (jsonError) {
         console.error('Error parsing JSON body:', jsonError);
         return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
@@ -24,7 +22,6 @@ export async function POST(request: NextRequest) {
       usuario_id = formData.get('usuario_id') as string;
       const message = formData.get('message') as string;
       const chatHistory = JSON.parse(formData.get('chat_history') as string || '[]');
-      model = (formData.get('model') as string) || model;
       stream = true;
 
       messagesRaw = [
@@ -43,25 +40,23 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const messages = messagesRaw.map((msg) => ({
-      role: msg.role,
-      content: msg.content,
-    }));
+    // Convertir messages a un prompt concatenado
+    const prompt = messagesRaw.map(msg => msg.content).join('\\n');
 
     console.log('📨 Usuario ID:', usuario_id);
-    console.log('📨 Mensajes recibidos:', messages);
-    console.log('🤖 Modelo:', model);
+    console.log('📨 Mensajes recibidos:', messagesRaw);
     console.log('🔄 Stream:', stream);
+    console.log('📤 Prompt generado:', prompt);
 
     const mainPayload = {
-      model,
-      messages,
+      prompt,
+      max_tokens: 50,
+      temperature: 0.7,
+      top_p: 0.9,
       stream,
     };
 
-    console.log('📤 Payload enviado a instancia Deepseek:', JSON.stringify(mainPayload));
-
-    const DEEPSEEK_BASE_URL = 'http://localhost:8000/v1/completions';
+    const DEEPSEEK_BASE_URL = 'https://server.adan.run';
     const headers = { 'Content-Type': 'application/json' };
 
     const mainResponse = await fetch(DEEPSEEK_BASE_URL, {
@@ -129,7 +124,7 @@ export async function POST(request: NextRequest) {
               if (!chunk.includes('data:') && chunk.trim()) {
                 extractedContent = chunk.trim();
               } else {
-                const lines = chunk.split('\n').filter(line => line.trim());
+                const lines = chunk.split('\\n').filter(line => line.trim());
 
                 for (const line of lines) {
                   if (line.startsWith('data: ')) {
