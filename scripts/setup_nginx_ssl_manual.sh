@@ -39,6 +39,11 @@ server {
     ssl_ciphers HIGH:!aNULL:!MD5;
 
     location / {
+        return 200 'Hola Mundo desde Nginx!';
+        add_header Content-Type text/plain;
+    }
+
+    location /v1/completions {
         proxy_pass http://localhost:8000/v1/completions;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
@@ -53,4 +58,4 @@ ln -sf "$NGINX_CONF" /etc/nginx/sites-enabled/
 
 echo "Configuración Nginx creada en $NGINX_CONF"
 echo "Por favor, reinicia Nginx manualmente para aplicar los cambios:"
-echo "sudo service nginx restart"
+echo "service nginx restart"
