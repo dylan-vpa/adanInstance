@@ -12,10 +12,7 @@ mkdir -p "$CERT_DIR"
 mkdir -p "$KEY_DIR"
 
 # Generar certificado autofirmado
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \\
-  -keyout "$KEY_DIR/${DOMAIN}.key" \\
-  -out "$CERT_DIR/${DOMAIN}.crt" \\
-  -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=$DOMAIN"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout "$KEY_DIR/${DOMAIN}.key" -out "$CERT_DIR/${DOMAIN}.crt" -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=$DOMAIN"
 
 echo "Certificado y clave generados en:"
 echo "Certificado: $CERT_DIR/${DOMAIN}.crt"
