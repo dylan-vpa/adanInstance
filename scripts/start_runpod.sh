@@ -47,9 +47,9 @@ echo "Starting vLLM server locally..."
 cd vllm || { echo "Failed to cd into vllm directory"; exit 1; }
 echo "Current directory after cd: $(pwd)"
 
-# Create and activate virtual environment if not exists
+# Remove existing virtual environment to ensure clean install
 if [ -d "venv" ]; then
-    echo "Removing incomplete or existing virtual environment at $(pwd)/venv"
+    echo "Removing existing virtual environment at $(pwd)/venv"
     rm -rf venv
 fi
 
@@ -121,10 +121,13 @@ cd ..
 echo "Starting moderador-api locally..."
 cd moderador-api
 
-# Create and activate virtual environment if not exists
-if [ ! -d "venv" ]; then
-    python3 -m venv venv
+# Remove existing virtual environment to ensure clean install
+if [ -d "venv" ]; then
+    echo "Removing existing virtual environment at $(pwd)/venv"
+    rm -rf venv
 fi
+
+python3 -m venv venv
 source venv/bin/activate
 
 pip install -r requirements.txt
