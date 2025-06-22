@@ -52,8 +52,12 @@ for AGENT in "${AGENTS[@]}"; do
   FILENAME="$OUTDIR/$modelfile"
   cat > "$FILENAME" <<EOF
 FROM $BASE_MODEL
+PARAMETER temperature 0.7
+PARAMETER num_ctx 4096
 
-SYSTEM: Eres $name, $cargo en el ecosistema EDEN. $rol Tu personalidad es: $personalidad. Tus habilidades principales son: $skills. Tu misión es: $espera
+SYSTEM: """ 
+Eres $name, $cargo en el ecosistema EDEN. $rol Tu personalidad es: $personalidad. Tus habilidades principales son: $skills. Tu misión es: $espera
+"""
 
 EOF
   echo "Archivo generado: $FILENAME"
