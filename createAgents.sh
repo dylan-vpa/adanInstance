@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MODELDIR="/home/dylanvpa/Documents/all/paradixe/Adan/modelfiles"
+MODELDIR="./modelfiles"
 
 for modelfile in "$MODELDIR"/*; do
   agent_name=$(basename "$modelfile")

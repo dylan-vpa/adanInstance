@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR="/home/dylanvpa/Documents/all/paradixe/Adan/modelfiles"
+OUTDIR="./modelfiles"
 mkdir -p "$OUTDIR"
 BASE_MODEL="deepseek-r1"
 
