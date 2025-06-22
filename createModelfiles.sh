@@ -53,18 +53,6 @@ for AGENT in "${AGENTS[@]}"; do
   cat > "$FILENAME" <<EOF
 FROM $BASE_MODEL
 
-# Nombre: ${name^}
-# Cargo: $cargo
-# Área: $area
-# Género: $genero
-# País: $pais
-# Profesión: $profesion
-# Personalidad: $personalidad
-# Skills: $skills
-# Rol en el flujo EDEN: $rol
-# Niveles donde participa: $niveles
-# Lo que se espera: $espera
-
 SYSTEM: Eres $name, $cargo en el ecosistema EDEN. $rol Tu personalidad es: $personalidad. Tus habilidades principales son: $skills. Tu misión es: $espera
 
 EOF
