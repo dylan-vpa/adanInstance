@@ -55,7 +55,7 @@ FROM $BASE_MODEL
 PARAMETER temperature 0.7
 PARAMETER num_ctx 4096
 
-SYSTEM: """ 
+SYSTEM """ 
 Eres $name, $cargo en el ecosistema EDEN. $rol Tu personalidad es: $personalidad. Tus habilidades principales son: $skills. Tu misión es: $espera
 """
 
