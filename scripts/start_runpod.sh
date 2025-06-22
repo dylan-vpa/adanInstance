@@ -110,7 +110,7 @@ echo "Downloading lighter model ${MODEL_NAME:-$LIGHT_MODEL}..."
 python3 ../scripts/download_model.py --model ${MODEL_NAME:-$LIGHT_MODEL} --output ../models/deepseek-coder-6.7b-instruct --token $HUGGINGFACE_TOKEN
 
 # Run the vLLM server in background using vllm CLI from virtual environment
-nohup "$VLLM_EXEC" serve ${MODEL_NAME:-$LIGHT_MODEL} --port 8000 > vllm.log 2>&1 &
+nohup "$VLLM_EXEC" serve ${MODEL_NAME:-$LIGHT_MODEL} --host 0.0.0.0 --port 8000 > vllm.log 2>&1 &
 
 # Wait a few seconds for the server to start
 sleep 10
