@@ -335,7 +335,13 @@ def create_agent_datasets(agents):
     with f:
         infobase_text = f.read()
     for agent in agents:
-        agent_dir = Path("datasets/{}".format(agent))
+        # Evita UnicodeEncodeError en nombres de carpeta
+        safe_agent = agent
+        try:
+            safe_agent = agent.encode('ascii', 'ignore').decode('ascii')
+        except Exception:
+            pass
+        agent_dir = Path("datasets/{}".format(safe_agent))
         # mkdir compatible
         if hasattr(agent_dir, "mkdir"):
             agent_dir.mkdir(exist_ok=True)
@@ -374,7 +380,10 @@ def create_agent_datasets(agents):
                 ftrain = open(str(train_file), 'w')
             with ftrain:
                 json.dump(sample_data, ftrain, indent=2, ensure_ascii=False)
-            print("[OK] Creado dataset de ejemplo para {}: train.json".format(agent))
+            try:
+                print("[OK] Creado dataset de ejemplo para {}: train.json".format(agent))
+            except UnicodeEncodeError:
+                print("[OK] Creado dataset de ejemplo para {}: train.json".format(safe_agent))
         if hasattr(eval_file, "exists"):
             eval_exists = eval_file.exists()
         else:
@@ -398,7 +407,10 @@ def create_agent_datasets(agents):
                 feval = open(str(eval_file), 'w')
             with feval:
                 json.dump(sample_eval, feval, indent=2, ensure_ascii=False)
-            print("[OK] Creado dataset de evaluación para {}: eval.json".format(agent))
+            try:
+                print("[OK] Creado dataset de evaluación para {}: eval.json".format(agent))
+            except UnicodeEncodeError:
+                print("[OK] Creado dataset de evaluación para {}: eval.json".format(safe_agent))
 
 def create_config_file():
     config = {
