@@ -537,7 +537,12 @@ def main():
 if __name__ == "__main__":
     main()
 '''
-    with open("scripts/validate_datasets.py", 'w', encoding='utf-8') as f:
+    # Compatibilidad Python 2.x: no usar encoding en open()
+    try:
+        f = open("scripts/validate_datasets.py", 'w', encoding='utf-8')
+    except TypeError:
+        f = open("scripts/validate_datasets.py", 'w')
+    with f:
         f.write(validation_script)
     os.chmod("scripts/validate_datasets.py", 0o755)
     print("[OK] Script de validación creado: scripts/validate_datasets.py")
