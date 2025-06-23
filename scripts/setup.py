@@ -45,7 +45,12 @@ def create_directory_structure():
 
 def create_infobase_json():
     infobase_path = Path("infobase.json")
-    if infobase_path.exists():
+    # Compatibilidad para Python 2.x (Path es un unicode)
+    if hasattr(infobase_path, "exists"):
+        exists = infobase_path.exists()
+    else:
+        exists = os.path.exists(infobase_path)
+    if exists:
         print("[OK] infobase.json ya existe")
         return
     infobase = {
@@ -283,8 +288,12 @@ def create_infobase_json():
             }
         ]
     }
-    with open(infobase_path, "w", encoding="utf-8") as f:
-        json.dump(infobase, f, indent=2, ensure_ascii=False)
+    if hasattr(infobase_path, "write"):
+        with open(infobase_path, "w", encoding="utf-8") as f:
+            json.dump(infobase, f, indent=2, ensure_ascii=False)
+    else:
+        with open(str(infobase_path), "w") as f:
+            json.dump(infobase, f, indent=2, ensure_ascii=False)
     print("[OK] Archivo base creado: infobase.json")
 
 def extract_agents_from_infobase():
