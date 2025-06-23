@@ -36,18 +36,17 @@ def create_directory_structure():
         "backups"
     ]
     for directory in directories:
-        # Compatibilidad para Python 2.x (Path es un unicode)
         if hasattr(Path(directory), "mkdir"):
             Path(directory).mkdir(exist_ok=True)
         else:
             if not os.path.exists(directory):
                 os.makedirs(directory)
-        print(u"\u2713 Directorio creado: {}".format(directory))  # ✓
+        print("[OK] Directorio creado: {}".format(directory))
 
 def create_infobase_json():
     infobase_path = Path("infobase.json")
     if infobase_path.exists():
-        print("✓ infobase.json ya existe")
+        print("[OK] infobase.json ya existe")
         return
     infobase = {
         "EDEN": {
@@ -286,23 +285,21 @@ def create_infobase_json():
     }
     with open(infobase_path, "w", encoding="utf-8") as f:
         json.dump(infobase, f, indent=2, ensure_ascii=False)
-    print("✓ Archivo base creado: infobase.json")
+    print("[OK] Archivo base creado: infobase.json")
 
 def extract_agents_from_infobase():
     infobase_path = Path("infobase.json")
     if not infobase_path.exists():
-        print("❗ infobase.json no encontrado")
+        print("[ERROR] infobase.json no encontrado")
         return []
     with open(infobase_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     agents = []
     for agent in data.get("agentes", []):
         name = agent["nombre"]
-        # Normaliza nombre para carpeta
         folder = name.lower().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "")
         agents.append(folder)
-        # print(f"✓ Agente detectado: {folder}")
-        print(u"\u2713 Agente detectado: {}".format(folder))  # ✓
+        print("[OK] Agente detectado: {}".format(folder))
     return agents
 
 def create_agent_datasets(agents):
@@ -333,7 +330,7 @@ def create_agent_datasets(agents):
             ]
             with open(train_file, 'w', encoding='utf-8') as f:
                 json.dump(sample_data, f, indent=2, ensure_ascii=False)
-            print(u"\u2713 Creado dataset de ejemplo para {}: train.json".format(agent))
+            print("[OK] Creado dataset de ejemplo para {}: train.json".format(agent))
         if not eval_file.exists():
             sample_eval = [
                 {
@@ -349,7 +346,7 @@ def create_agent_datasets(agents):
             ]
             with open(eval_file, 'w', encoding='utf-8') as f:
                 json.dump(sample_eval, f, indent=2, ensure_ascii=False)
-            print(u"\u2713 Creado dataset de evaluación para {}: eval.json".format(agent))
+            print("[OK] Creado dataset de evaluación para {}: eval.json".format(agent))
 
 def create_config_file():
     config = {
@@ -381,7 +378,7 @@ def create_config_file():
     }
     with open("config.json", 'w', encoding='utf-8') as f:
         json.dump(config, f, indent=2)
-    print("✓ Archivo de configuración creado: config.json")
+    print("[OK] Archivo de configuración creado: config.json")
 
 def create_requirements_file():
     requirements = [
@@ -399,7 +396,7 @@ def create_requirements_file():
     ]
     with open("requirements.txt", 'w') as f:
         f.write('\n'.join(requirements))
-    print("✓ Archivo de dependencias creado: requirements.txt")
+    print("[OK] Archivo de dependencias creado: requirements.txt")
 
 def create_validation_script():
     validation_script = '''#!/usr/bin/env python3
@@ -414,39 +411,39 @@ def validate_dataset(file_path):
             return False, "Dataset debe ser una lista"
         for i, item in enumerate(data):
             if not isinstance(item, dict):
-                return False, f"Item {i} no es un diccionario"
+                return False, "Item {} no es un diccionario".format(i)
             required_keys = ['instruction', 'input', 'output']
             for key in required_keys:
                 if key not in item:
-                    return False, f"Item {i} falta clave '{key}'"
+                    return False, "Item {} falta clave '{}'".format(i, key)
                 if not isinstance(item[key], str):
-                    return False, f"Item {i} clave '{key}' no es string"
-        return True, f"Dataset válido con {len(data)} ejemplos"
+                    return False, "Item {} clave '{}' no es string".format(i, key)
+        return True, "Dataset válido con {} ejemplos".format(len(data))
     except Exception as e:
-        return False, f"Error: {str(e)}"
+        return False, "Error: {}".format(str(e))
 
 def main():
     datasets_dir = Path("datasets")
     if not datasets_dir.exists():
-        print("❗ Directorio datasets no encontrado")
+        print("[ERROR] Directorio datasets no encontrado")
         return
     total_valid = 0
     total_files = 0
     for agent_dir in datasets_dir.iterdir():
         if agent_dir.is_dir():
-            print(f"\\n📁 Validando agente: {agent_dir.name}")
+            print("\\n[OK] Validando agente: {}".format(agent_dir.name))
             for dataset_file in ['train.json', 'eval.json']:
                 file_path = agent_dir / dataset_file
                 total_files += 1
                 if file_path.exists():
                     is_valid, message = validate_dataset(file_path)
-                    status = "✓" if is_valid else "❌"
-                    print(f"  {status} {dataset_file}: {message}")
+                    status = "[OK]" if is_valid else "[ERROR]"
+                    print("  {} {}: {}".format(status, dataset_file, message))
                     if is_valid:
                         total_valid += 1
                 else:
-                    print(f"  ❌ {dataset_file}: Archivo no encontrado")
-    print(f"\\n📊 Resumen: {total_valid}/{total_files} archivos válidos")
+                    print("  [ERROR] {}: Archivo no encontrado".format(dataset_file))
+    print("\\n[OK] Resumen: {}/{} archivos válidos".format(total_valid, total_files))
 
 if __name__ == "__main__":
     main()
@@ -454,34 +451,32 @@ if __name__ == "__main__":
     with open("scripts/validate_datasets.py", 'w', encoding='utf-8') as f:
         f.write(validation_script)
     os.chmod("scripts/validate_datasets.py", 0o755)
-    print("✓ Script de validación creado: scripts/validate_datasets.py")
+    print("[OK] Script de validación creado: scripts/validate_datasets.py")
 
 def main():
-    print("🚀 Configurando sistema de fine-tuning para modelos Ollama...")
-    print("=" * 60)
-    print("\n📁 Creando estructura de directorios...")
+    print("=== Configurando sistema de fine-tuning para modelos Ollama ===")
+    print("\n[INFO] Creando estructura de directorios...")
     create_directory_structure()
-    print("\n📚 Creando archivo infobase.json (si no existe)...")
+    print("\n[INFO] Creando archivo infobase.json (si no existe)...")
     create_infobase_json()
-    print("\n🤖 Detectando agentes desde infobase.json...")
+    print("\n[INFO] Detectando agentes desde infobase.json...")
     agents = extract_agents_from_infobase()
     if not agents:
-        print("❗ No se encontraron agentes en infobase.json")
+        print("[ERROR] No se encontraron agentes en infobase.json")
         return
-    print("\n📝 Creando datasets de ejemplo para cada agente...")
+    print("\n[INFO] Creando datasets de ejemplo para cada agente...")
     create_agent_datasets(agents)
-    print("\n⚙️ Creando archivos de configuración y dependencias...")
+    print("\n[INFO] Creando archivos de configuración y dependencias...")
     create_config_file()
     create_requirements_file()
     create_validation_script()
-    print("\n" + "=" * 60)
-    print("✅ Setup completado exitosamente!")
-    print("\n📋 Próximos pasos:")
+    print("\n=== Setup completado exitosamente! ===")
+    print("\n[INFO] Próximos pasos:")
     print("1. Instalar dependencias: pip install -r requirements.txt")
     print("2. Editar datasets en datasets/[agente]/train.json y eval.json")
     print("3. Validar datos: python scripts/validate_datasets.py")
     print("4. Ejecutar fine-tuning: python scripts/finetune_model.py --agent_name [agente]")
-    print("\n📖 Ver README.md para instrucciones detalladas")
+    print("\nVer README.md para instrucciones detalladas")
 
 if __name__ == "__main__":
     main()
