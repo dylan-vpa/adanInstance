@@ -348,8 +348,13 @@ def create_agent_datasets(agents):
         else:
             if not os.path.exists(agent_dir):
                 os.makedirs(agent_dir)
-        train_file = agent_dir / "train.json"
-        eval_file = agent_dir / "eval.json"
+        # Compatibilidad para Python 2.x: no usar operador "/" en Path unicode
+        if hasattr(agent_dir, "__truediv__"):
+            train_file = agent_dir / "train.json"
+            eval_file = agent_dir / "eval.json"
+        else:
+            train_file = os.path.join(agent_dir, "train.json")
+            eval_file = os.path.join(agent_dir, "eval.json")
         # exists compatible
         if hasattr(train_file, "exists"):
             train_exists = train_file.exists()
