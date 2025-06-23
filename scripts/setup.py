@@ -298,10 +298,20 @@ def create_infobase_json():
 
 def extract_agents_from_infobase():
     infobase_path = Path("infobase.json")
-    if not infobase_path.exists():
+    # Compatibilidad para Python 2.x (Path es un unicode)
+    if hasattr(infobase_path, "exists"):
+        exists = infobase_path.exists()
+    else:
+        exists = os.path.exists(infobase_path)
+    if not exists:
         print("[ERROR] infobase.json no encontrado")
         return []
-    with open(infobase_path, "r", encoding="utf-8") as f:
+    # Abrir archivo
+    if hasattr(infobase_path, "open"):
+        f = open(infobase_path, "r", encoding="utf-8")
+    else:
+        f = open(str(infobase_path), "r")
+    with f:
         data = json.load(f)
     agents = []
     for agent in data.get("agentes", []):
@@ -312,14 +322,30 @@ def extract_agents_from_infobase():
     return agents
 
 def create_agent_datasets(agents):
-    with open("infobase.json", "r", encoding="utf-8") as f:
+    # Abrir archivo infobase.json compatible
+    infobase_path = Path("infobase.json")
+    if hasattr(infobase_path, "open"):
+        f = open(infobase_path, "r", encoding="utf-8")
+    else:
+        f = open(str(infobase_path), "r")
+    with f:
         infobase_text = f.read()
     for agent in agents:
         agent_dir = Path("datasets/{}".format(agent))
-        agent_dir.mkdir(exist_ok=True)
+        # mkdir compatible
+        if hasattr(agent_dir, "mkdir"):
+            agent_dir.mkdir(exist_ok=True)
+        else:
+            if not os.path.exists(agent_dir):
+                os.makedirs(agent_dir)
         train_file = agent_dir / "train.json"
         eval_file = agent_dir / "eval.json"
-        if not train_file.exists():
+        # exists compatible
+        if hasattr(train_file, "exists"):
+            train_exists = train_file.exists()
+        else:
+            train_exists = os.path.exists(str(train_file))
+        if not train_exists:
             sample_data = [
                 {
                     "instruction": u"¿Cuál es tu rol como {} en el ecosistema EDEN?".format(agent),
@@ -337,10 +363,19 @@ def create_agent_datasets(agents):
                     "output": infobase_text[:2000]
                 }
             ]
-            with open(train_file, 'w', encoding='utf-8') as f:
-                json.dump(sample_data, f, indent=2, ensure_ascii=False)
+            # open compatible
+            if hasattr(train_file, "open"):
+                ftrain = open(train_file, 'w', encoding='utf-8')
+            else:
+                ftrain = open(str(train_file), 'w')
+            with ftrain:
+                json.dump(sample_data, ftrain, indent=2, ensure_ascii=False)
             print("[OK] Creado dataset de ejemplo para {}: train.json".format(agent))
-        if not eval_file.exists():
+        if hasattr(eval_file, "exists"):
+            eval_exists = eval_file.exists()
+        else:
+            eval_exists = os.path.exists(str(eval_file))
+        if not eval_exists:
             sample_eval = [
                 {
                     "instruction": u"¿Cuál es tu mayor fortaleza como {}?".format(agent),
@@ -353,8 +388,12 @@ def create_agent_datasets(agents):
                     "output": "Analizo la situación desde mi perspectiva experta, consulto con otros agentes cuando es necesario y propongo soluciones estructuradas y viables."
                 }
             ]
-            with open(eval_file, 'w', encoding='utf-8') as f:
-                json.dump(sample_eval, f, indent=2, ensure_ascii=False)
+            if hasattr(eval_file, "open"):
+                feval = open(eval_file, 'w', encoding='utf-8')
+            else:
+                feval = open(str(eval_file), 'w')
+            with feval:
+                json.dump(sample_eval, feval, indent=2, ensure_ascii=False)
             print("[OK] Creado dataset de evaluación para {}: eval.json".format(agent))
 
 def create_config_file():
