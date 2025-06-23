@@ -16,7 +16,8 @@ def create_directory_structure():
     ]
     for directory in directories:
         Path(directory).mkdir(exist_ok=True)
-        print(f"✓ Directorio creado: {directory}")
+        # print(f"✓ Directorio creado: {directory}")
+        print(u"\u2713 Directorio creado: {}".format(directory))  # ✓
 
 def create_infobase_json():
     infobase_path = Path("infobase.json")
