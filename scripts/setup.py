@@ -2,7 +2,28 @@
 #!/usr/bin/env python3
 import os
 import json
-from pathlib import Path
+try:
+    from pathlib import Path
+except ImportError:
+    # Para Python 2.x, define Path como un wrapper de os.path
+    class Path(unicode):
+        def __new__(cls, *args):
+            return unicode(os.path.join(*args))
+        def mkdir(self, exist_ok=False):
+            if not os.path.exists(self):
+                os.makedirs(self)
+        def exists(self):
+            return os.path.exists(self)
+        def __truediv__(self, other):
+            return Path(os.path.join(self, other))
+        def __div__(self, other):
+            return Path(os.path.join(self, other))
+        def iterdir(self):
+            return [Path(os.path.join(self, f)) for f in os.listdir(self) if os.path.isdir(os.path.join(self, f))]
+        def is_dir(self):
+            return os.path.isdir(self)
+        def is_file(self):
+            return os.path.isfile(self)
 
 def create_directory_structure():
     directories = [
