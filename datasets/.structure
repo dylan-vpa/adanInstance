@@ -1,0 +1,50 @@
+```bash
+#!/bin/bash
+
+DATASETDIR="./datasets"
+
+# Crear directorios y archivos para cada agente
+AGENTS=(
+"adan"
+"elsy"
+"bella"
+"gaby"
+"eva"
+"dany"
+"dylan"
+"milo"
+"noah"
+"isa"
+"ema"
+"liam"
+"diego"
+"luna"
+"tita"
+"sofia"
+"andu"
+"goga"
+"zoe"
+"mila"
+"ethan"
+"julia"
+"lucas"
+"max"
+"kai"
+"ray"
+"sam"
+"leo"
+"mia"
+"nia"
+"tom"
+"ben"
+"zara"
+"oliver"
+)
+
+for AGENT in "${AGENTS[@]}"; do
+  DIR="$DATASETDIR/$AGENT"
+  mkdir -p "$DIR"
+  touch "$DIR/train.json" "$DIR/eval.json"
+  echo "Creado dataset para: $AGENT"
+done
+```
