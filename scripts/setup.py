@@ -276,7 +276,8 @@ def extract_agents_from_infobase():
         # Normaliza nombre para carpeta
         folder = name.lower().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "")
         agents.append(folder)
-        print(f"✓ Agente detectado: {folder}")
+        # print(f"✓ Agente detectado: {folder}")
+        print(u"\u2713 Agente detectado: {}".format(folder))  # ✓
     return agents
 
 def create_agent_datasets(agents):
