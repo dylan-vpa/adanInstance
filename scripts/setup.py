@@ -384,11 +384,24 @@ def create_agent_datasets(agents):
             else:
                 ftrain = open(str(train_file), 'w')
             with ftrain:
-                json.dump(sample_data, ftrain, indent=2, ensure_ascii=False)
-            try:
-                print("[OK] Creado dataset de ejemplo para {}: train.json".format(agent))
-            except UnicodeEncodeError:
-                print("[OK] Creado dataset de ejemplo para {}: train.json".format(safe_agent))
+                try:
+                    json.dump(sample_data, ftrain, indent=2, ensure_ascii=False)
+                except UnicodeEncodeError:
+                    # Python 2.x workaround: encode all unicode strings to utf-8 before dumping
+                    def encode_dict(d):
+                        if isinstance(d, dict):
+                            return {encode_dict(k): encode_dict(v) for k, v in d.items()}
+                        elif isinstance(d, list):
+                            return [encode_dict(i) for i in d]
+                        elif isinstance(d, unicode):
+                            return d.encode('utf-8')
+                        else:
+                            return d
+                    json.dump(encode_dict(sample_data), ftrain, indent=2, ensure_ascii=False)
+        try:
+            print("[OK] Creado dataset de ejemplo para {}: train.json".format(agent))
+        except UnicodeEncodeError:
+            print("[OK] Creado dataset de ejemplo para {}: train.json".format(safe_agent))
         if hasattr(eval_file, "exists"):
             eval_exists = eval_file.exists()
         else:
@@ -411,7 +424,10 @@ def create_agent_datasets(agents):
             else:
                 feval = open(str(eval_file), 'w')
             with feval:
-                json.dump(sample_eval, feval, indent=2, ensure_ascii=False)
+                try:
+                    json.dump(sample_eval, feval, indent=2, ensure_ascii=False)
+                except UnicodeEncodeError:
+                    json.dump(encode_dict(sample_eval), feval, indent=2, ensure_ascii=False)
             try:
                 print("[OK] Creado dataset de evaluación para {}: eval.json".format(agent))
             except UnicodeEncodeError:
