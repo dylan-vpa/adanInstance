@@ -284,47 +284,47 @@ def create_agent_datasets(agents):
     with open("infobase.json", "r", encoding="utf-8") as f:
         infobase_text = f.read()
     for agent in agents:
-        agent_dir = Path(f"datasets/{agent}")
+        agent_dir = Path("datasets/{}".format(agent))
         agent_dir.mkdir(exist_ok=True)
         train_file = agent_dir / "train.json"
         eval_file = agent_dir / "eval.json"
         if not train_file.exists():
             sample_data = [
                 {
-                    "instruction": f"¿Cuál es tu rol como {agent} en el ecosistema EDEN?",
+                    "instruction": u"¿Cuál es tu rol como {} en el ecosistema EDEN?".format(agent),
                     "input": "",
-                    "output": f"Como {agent}, mi rol principal es contribuir específicamente en mi área de expertise dentro del ecosistema EDEN, trabajando colaborativamente con otros agentes para lograr los objetivos del proyecto."
+                    "output": u"Como {}, mi rol principal es contribuir específicamente en mi área de expertise dentro del ecosistema EDEN, trabajando colaborativamente con otros agentes para lograr los objetivos del proyecto.".format(agent)
                 },
                 {
-                    "instruction": "Preséntate brevemente",
+                    "instruction": u"Preséntate brevemente",
                     "input": "",
-                    "output": f"Hola, soy {agent}. Trabajo en el ecosistema EDEN aportando mis habilidades especializadas para el éxito de los proyectos."
+                    "output": u"Hola, soy {}. Trabajo en el ecosistema EDEN aportando mis habilidades especializadas para el éxito de los proyectos.".format(agent)
                 },
                 {
-                    "instruction": "¿Qué es EDEN y cómo funciona el flujo de niveles?",
+                    "instruction": u"¿Qué es EDEN y cómo funciona el flujo de niveles?",
                     "input": "",
                     "output": infobase_text[:2000]
                 }
             ]
             with open(train_file, 'w', encoding='utf-8') as f:
                 json.dump(sample_data, f, indent=2, ensure_ascii=False)
-            print(f"✓ Creado dataset de ejemplo para {agent}: train.json")
+            print(u"\u2713 Creado dataset de ejemplo para {}: train.json".format(agent))
         if not eval_file.exists():
             sample_eval = [
                 {
-                    "instruction": f"¿Cuál es tu mayor fortaleza como {agent}?",
+                    "instruction": u"¿Cuál es tu mayor fortaleza como {}?".format(agent),
                     "input": "",
-                    "output": f"Mi mayor fortaleza es mi expertise especializada y mi capacidad de trabajar colaborativamente en el ecosistema EDEN."
+                    "output": u"Mi mayor fortaleza es mi expertise especializada y mi capacidad de trabajar colaborativamente en el ecosistema EDEN."
                 },
                 {
-                    "instruction": "¿Cómo manejas situaciones complejas?",
+                    "instruction": u"¿Cómo manejas situaciones complejas?",
                     "input": "",
                     "output": "Analizo la situación desde mi perspectiva experta, consulto con otros agentes cuando es necesario y propongo soluciones estructuradas y viables."
                 }
             ]
             with open(eval_file, 'w', encoding='utf-8') as f:
                 json.dump(sample_eval, f, indent=2, ensure_ascii=False)
-            print(f"✓ Creado dataset de evaluación para {agent}: eval.json")
+            print(u"\u2713 Creado dataset de evaluación para {}: eval.json".format(agent))
 
 def create_config_file():
     config = {
