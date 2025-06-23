@@ -318,7 +318,11 @@ def extract_agents_from_infobase():
         name = agent["nombre"]
         folder = name.lower().replace(" ", "_").replace("(", "").replace(")", "").replace(",", "")
         agents.append(folder)
-        print("[OK] Agente detectado: {}".format(folder))
+        # Evita UnicodeEncodeError en prints con acentos en consolas ascii
+        try:
+            print("[OK] Agente detectado: {}".format(folder))
+        except UnicodeEncodeError:
+            print("[OK] Agente detectado: {}".format(folder.encode('utf-8')))
     return agents
 
 def create_agent_datasets(agents):
