@@ -36,8 +36,12 @@ def create_directory_structure():
         "backups"
     ]
     for directory in directories:
-        Path(directory).mkdir(exist_ok=True)
-        # print(f"✓ Directorio creado: {directory}")
+        # Compatibilidad para Python 2.x (Path es un unicode)
+        if hasattr(Path(directory), "mkdir"):
+            Path(directory).mkdir(exist_ok=True)
+        else:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
         print(u"\u2713 Directorio creado: {}".format(directory))  # ✓
 
 def create_infobase_json():
