@@ -460,7 +460,12 @@ def create_config_file():
         "model_max_length": 2048,
         "output_dir": "models_finetuned"
     }
-    with open("config.json", 'w', encoding='utf-8') as f:
+    # Compatibilidad Python 2.x: no usar encoding en open()
+    try:
+        f = open("config.json", 'w', encoding='utf-8')
+    except TypeError:
+        f = open("config.json", 'w')
+    with f:
         json.dump(config, f, indent=2)
     print("[OK] Archivo de configuración creado: config.json")
 
