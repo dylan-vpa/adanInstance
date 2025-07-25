@@ -1,5 +1,6 @@
 FROM deepseek:latest
 
+ADAPTER ./adapters/dany_cloud_adapter.safetensors
 
 PARAMETER temperature 0.6
 PARAMETER num_ctx 4096

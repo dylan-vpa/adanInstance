@@ -4,6 +4,7 @@
 FROM mistral:latest
 
 # Adapter LoRA específico para VP de IT
+ADAPTER ./adapters/dylan_vpit_adapter.safetensors
 
 # Parámetros optimizados para VP de IT
 PARAMETER temperature 0.7

@@ -3,6 +3,9 @@
 
 FROM llama3.2:latest
 
+# Adapter LoRA específico para CEO
+ADAPTER ./adapters/adan_ceo_adapter.safetensors
+
 # Parámetros optimizados para CEO
 PARAMETER temperature 0.7
 PARAMETER num_ctx 4096

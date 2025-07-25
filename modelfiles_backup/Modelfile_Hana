@@ -4,6 +4,7 @@
 FROM deepseek:latest
 
 # Adapter LoRA específico para Recursos Humanos
+ADAPTER ./adapters/hana_rrhh_adapter.safetensors
 
 # Parámetros optimizados para Recursos Humanos
 PARAMETER temperature 0.7

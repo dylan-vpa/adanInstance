@@ -4,6 +4,7 @@
 FROM llama3.2:latest
 
 # Adapter LoRA específico para Gerente de Branding
+ADAPTER ./adapters/bella_branding_adapter.safetensors
 
 # Parámetros optimizados para Gerente de Branding
 PARAMETER temperature 0.8

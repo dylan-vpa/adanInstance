@@ -4,6 +4,7 @@
 FROM mistral:latest
 
 # Adapter LoRA específico para Gerente de Auditoría
+ADAPTER ./adapters/elsy_auditoria_adapter.safetensors
 
 # Parámetros optimizados para Gerente de Auditoría
 PARAMETER temperature 0.3
