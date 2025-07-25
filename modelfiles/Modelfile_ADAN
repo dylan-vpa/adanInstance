@@ -3,6 +3,8 @@
 
 FROM llama3.2:latest
 
+# Adapter LoRA específico para CEO
+
 # Parámetros optimizados para CEO
 PARAMETER temperature 0.7
 PARAMETER num_ctx 4096
