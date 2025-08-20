@@ -10,8 +10,8 @@ echo ""
 # Mapeo de nombres del frontend a los modelfiles existentes
 # Formato: nombre_frontend|nombre_modelfile|descripción
 FRONTEND_TO_MODELFILE=(
-"Modelfile_Adan_CEO|Modelfile_ADAN|CEO & Business Strategy"
-"eva_vpmarketing|Modelfile_EVA|Chief Marketing Officer"
+"Modelfile_Adan_CEO|Modelfile_Adan_CEO|CEO & Business Strategy"
+"eva_vpmarketing|Modelfile_Eva|Chief Marketing Officer"
 "tita_vp_administrativo|Modelfile_Tita|Chief Administrative Officer"
 "dany_tecnicocloud|Modelfile_Dany|Cloud Engineer"
 "ethan_soporte|Modelfile_Dylan|IT Support"
@@ -27,7 +27,24 @@ FRONTEND_TO_MODELFILE=(
 "Modelfile_GER_DE_Zoe|Modelfile_Hana|HR Manager"
 "Modelfile_GER_DE_Elsy|Modelfile_Elsy|Legal Manager"
 "Modelfile_GER_DE_Bella|Modelfile_Bella|Branding Manager"
-"Modelfile_Moderator|Modelfile_Moderator|Sistema de Moderación y Enrutamiento"
+"Modelfile_Moderator|Modelfile_Moderator|Sistema de Moderación y Enrutamiento EDEN"
+"max_data_scientist|Modelfile_Max|Data Scientist"
+"kai_market_research|Modelfile_Kai|Market Research Lead"
+"ray_tech_architect|Modelfile_Ray|Technical Architect"
+"sam_legal_tech|Modelfile_Sam|Legal Tech Specialist"
+"leo_business_analyst|Modelfile_Leo|Business Analyst"
+"alex_security|Modelfile_Alex|Security Lead"
+"mia_devops|Modelfile_Mia|DevOps Engineer"
+"kai_performance|Modelfile_Kai_Performance|Performance Engineer"
+"nia_growth|Modelfile_Nia|Growth Lead"
+"tom_cx|Modelfile_Tom|Customer Experience Lead"
+"ana_research|Modelfile_Ana|User Research Lead"
+"ben_cfo|Modelfile_Ben|Chief Financial Officer"
+"zara_investment|Modelfile_Zara|Investment Relations Lead"
+"oliver_strategy|Modelfile_Oliver|Strategic Planning Lead"
+"sofia_success|Modelfile_Sofia_Success|Customer Success Lead"
+"jack_sales|Modelfile_Jack|Enterprise Sales Lead"
+"maya_support|Modelfile_Maya|Support Operations Lead"
 )
 
 # Contadores para estadísticas

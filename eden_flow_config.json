@@ -1,0 +1,543 @@
+{
+  "eden_ecosystem": {
+    "name": "EDEN - Ecosistema de Diseño y Éxito de Negocios",
+    "description": "Transforma ideas de negocio en startups exitosas, operativas y escalables",
+    "version": "1.0.0",
+    "levels": [
+      {
+        "id": 1,
+        "name": "El Dolor",
+        "title": "Validación del Problema",
+        "objective": "Validar científicamente que el problema detectado es real, urgente, frecuente y monetizable",
+        "key_actions": [
+          "Investigación de Mercado",
+          "Validación con Usuarios",
+          "Análisis de Datos"
+        ],
+        "deliverables": [
+          "DIAGNOSTICO_DOLOR.pdf",
+          "SCORE_OPORTUNIDAD.pdf",
+          "VALIDACION_CLIENTES.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión y validación final"
+          },
+          {
+            "id": "eva_marketing",
+            "name": "EVA",
+            "role": "Chief Marketing Officer",
+            "responsibility": "Análisis de mercado y tendencias"
+          },
+          {
+            "id": "gaby_community",
+            "name": "Gaby",
+            "role": "Community Manager",
+            "responsibility": "Gestión de entrevistas y feedback"
+          },
+          {
+            "id": "max_data_scientist",
+            "name": "Max",
+            "role": "Data Scientist",
+            "responsibility": "Análisis cuantitativo"
+          },
+          {
+            "id": "kai_market_research",
+            "name": "Kai",
+            "role": "Market Research Lead",
+            "responsibility": "Investigación de mercado"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "score_minimum": 8,
+          "interviews_minimum": 15,
+          "payment": "5 USD en @pple coins"
+        }
+      },
+      {
+        "id": 2,
+        "name": "La Solución",
+        "title": "Diseño y Validación",
+        "objective": "Diseñar y validar una solución única, escalable y diferenciada",
+        "key_actions": [
+          "Diseño de Solución",
+          "Análisis Competitivo",
+          "Validación Técnica"
+        ],
+        "deliverables": [
+          "PROPUESTA_SOLUCION_UNICA.pdf",
+          "MATRIZ_DIFERENCIACION.pdf",
+          "BENCHMARK_COMPETIDORES.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión y validación"
+          },
+          {
+            "id": "isa_ux_ui",
+            "name": "Isa",
+            "role": "UX/UI Designer",
+            "responsibility": "Diseño de experiencia de usuario"
+          },
+          {
+            "id": "ema_producto",
+            "name": "Ema",
+            "role": "Product Development",
+            "responsibility": "Desarrollo de solución"
+          },
+          {
+            "id": "ray_tech_architect",
+            "name": "Ray",
+            "role": "Technical Architect",
+            "responsibility": "Arquitectura técnica"
+          },
+          {
+            "id": "bella_branding",
+            "name": "Bella",
+            "role": "Branding Manager",
+            "responsibility": "Diferenciación y posicionamiento"
+          },
+          {
+            "id": "kai_market_research",
+            "name": "Kai",
+            "role": "Market Research Lead",
+            "responsibility": "Análisis competitivo"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "prototype_validated": true,
+          "differentiators_identified": true,
+          "payment": "5 USD en @pple coins"
+        }
+      },
+      {
+        "id": 3,
+        "name": "Plan de Negocio y Constitución",
+        "title": "Constitución Empresarial",
+        "objective": "Crear una entidad empresarial legalmente constituida, estructuralmente sólida y financieramente viable",
+        "key_actions": [
+          "Planificación Estratégica",
+          "Constitución Legal",
+          "Identidad Corporativa"
+        ],
+        "deliverables": [
+          "PLAN_NEGOCIO_ADAN.pdf",
+          "BUSINESS_MODEL_CANVAS.pdf",
+          "LOGO_Y_MANUAL.pdf",
+          "CHECKLIST_CONSTITUCION.pdf",
+          "PROYECCIONES_FINANCIERAS.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión general"
+          },
+          {
+            "id": "elsy_legal",
+            "name": "Elsy",
+            "role": "Legal Manager",
+            "responsibility": "Constitución y compliance"
+          },
+          {
+            "id": "bella_branding",
+            "name": "Bella",
+            "role": "Branding Manager",
+            "responsibility": "Identidad corporativa"
+          },
+          {
+            "id": "milo_documentador",
+            "name": "Milo",
+            "role": "Documentation Specialist",
+            "responsibility": "Documentación técnica"
+          },
+          {
+            "id": "tita_admin",
+            "name": "Tita",
+            "role": "VP Administrative",
+            "responsibility": "Procesos y estructura"
+          },
+          {
+            "id": "zoe_hr",
+            "name": "Zoe",
+            "role": "HR Manager",
+            "responsibility": "Organización y cultura"
+          },
+          {
+            "id": "noah_finance",
+            "name": "Noah",
+            "role": "VP Finance",
+            "responsibility": "Proyecciones y modelos"
+          },
+          {
+            "id": "sam_legal_tech",
+            "name": "Sam",
+            "role": "Legal Tech Specialist",
+            "responsibility": "Contratos inteligentes"
+          },
+          {
+            "id": "leo_business_analyst",
+            "name": "Leo",
+            "role": "Business Analyst",
+            "responsibility": "Modelado de negocio"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "company_legally_constituted": true,
+          "corporate_identity_complete": true,
+          "financial_model_validated": true,
+          "payment": "5 USD en @pple coins"
+        }
+      },
+      {
+        "id": 4,
+        "name": "MVP Funcional",
+        "title": "Desarrollo del MVP",
+        "objective": "Desarrollar y validar un MVP que demuestre la propuesta de valor y valide las hipótesis clave",
+        "key_actions": [
+          "Desarrollo Técnico",
+          "UX/UI",
+          "Infraestructura"
+        ],
+        "deliverables": [
+          "MVP_WEB_FUNCIONAL.zip",
+          "INFORME_TRACCION.pdf",
+          "DOCUMENTACION_TECNICA.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión general"
+          },
+          {
+            "id": "dylan_vp_it",
+            "name": "Dylan",
+            "role": "VP IT",
+            "responsibility": "Liderazgo técnico"
+          },
+          {
+            "id": "isa_ux_ui",
+            "name": "Isa",
+            "role": "UX/UI Designer",
+            "responsibility": "Experiencia de usuario"
+          },
+          {
+            "id": "dany_cloud",
+            "name": "Dany",
+            "role": "Cloud Engineer",
+            "responsibility": "Infraestructura"
+          },
+          {
+            "id": "ethan_support",
+            "name": "Ethan",
+            "role": "IT Support",
+            "responsibility": "Soporte técnico"
+          },
+          {
+            "id": "julia_qa",
+            "name": "Julia",
+            "role": "QA Engineer",
+            "responsibility": "Testing y calidad"
+          },
+          {
+            "id": "alex_security",
+            "name": "Alex",
+            "role": "Security Lead",
+            "responsibility": "Seguridad y compliance"
+          },
+          {
+            "id": "mia_devops",
+            "name": "Mia",
+            "role": "DevOps Engineer",
+            "responsibility": "CI/CD y automatización"
+          },
+          {
+            "id": "kai_performance",
+            "name": "Kai",
+            "role": "Performance Engineer",
+            "responsibility": "Optimización"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "mvp_functional": true,
+          "documentation_complete": true,
+          "usage_metrics_positive": true,
+          "payment": "5 USD en @pple coins"
+        }
+      },
+      {
+        "id": 5,
+        "name": "Validación de Mercado",
+        "title": "Validación en el Mercado Real",
+        "objective": "Validar el producto en el mercado real, recolectando métricas y feedback estructurado para optimización",
+        "key_actions": [
+          "Testing de Mercado",
+          "Análisis de Métricas",
+          "Optimización"
+        ],
+        "deliverables": [
+          "INFORME_VALIDACION_MERCADO.pdf",
+          "METRICAS_SATISFACCION.pdf",
+          "PLAN_OPTIMIZACION.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión general"
+          },
+          {
+            "id": "gaby_community",
+            "name": "Gaby",
+            "role": "Community Manager",
+            "responsibility": "Gestión de usuarios"
+          },
+          {
+            "id": "mila_scrum",
+            "name": "Mila",
+            "role": "Scrum Master",
+            "responsibility": "Gestión de proceso"
+          },
+          {
+            "id": "max_data_scientist",
+            "name": "Max",
+            "role": "Data Scientist",
+            "responsibility": "Análisis de datos"
+          },
+          {
+            "id": "ema_producto",
+            "name": "Ema",
+            "role": "Product Development",
+            "responsibility": "Optimización"
+          },
+          {
+            "id": "nia_growth",
+            "name": "Nia",
+            "role": "Growth Lead",
+            "responsibility": "Métricas de crecimiento"
+          },
+          {
+            "id": "tom_cx",
+            "name": "Tom",
+            "role": "Customer Experience Lead",
+            "responsibility": "Experiencia de cliente"
+          },
+          {
+            "id": "ana_research",
+            "name": "Ana",
+            "role": "User Research Lead",
+            "responsibility": "Investigación de usuarios"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "market_metrics_positive": true,
+          "optimization_plan_approved": true,
+          "user_feedback_positive": true,
+          "payment": "5 USD en @pple coins"
+        }
+      },
+      {
+        "id": 6,
+        "name": "Proyección y Estrategia",
+        "title": "Crecimiento e Inversión",
+        "objective": "Definir la estrategia de crecimiento y captación de inversión para escalar el negocio",
+        "key_actions": [
+          "Modelado Financiero",
+          "Plan de Crecimiento",
+          "Pitch de Inversión"
+        ],
+        "deliverables": [
+          "PROYECCION_FINANCIERA_12M.pdf",
+          "PLAN_CAPTACION_INVERSION.pdf",
+          "PLAN_EXPANSION.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión general"
+          },
+          {
+            "id": "noah_finance",
+            "name": "Noah",
+            "role": "VP Finance",
+            "responsibility": "Modelado financiero"
+          },
+          {
+            "id": "liam_investor",
+            "name": "Liam",
+            "role": "Investor",
+            "responsibility": "Valuación"
+          },
+          {
+            "id": "diego_investor",
+            "name": "Diego",
+            "role": "Investor",
+            "responsibility": "Due diligence"
+          },
+          {
+            "id": "luna_investor",
+            "name": "Luna",
+            "role": "Investor",
+            "responsibility": "Estrategia"
+          },
+          {
+            "id": "ben_cfo",
+            "name": "Ben",
+            "role": "CFO",
+            "responsibility": "Finanzas estratégicas"
+          },
+          {
+            "id": "zara_investment",
+            "name": "Zara",
+            "role": "Investment Relations Lead",
+            "responsibility": "Relación con inversores"
+          },
+          {
+            "id": "oliver_strategy",
+            "name": "Oliver",
+            "role": "Strategic Planning Lead",
+            "responsibility": "Planificación estratégica"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "financial_model_validated": true,
+          "pitch_deck_approved": true,
+          "expansion_plan_defined": true,
+          "payment": "5 USD en @pple coins"
+        }
+      },
+      {
+        "id": 7,
+        "name": "Lanzamiento Real",
+        "title": "Lanzamiento al Mercado",
+        "objective": "Lanzar el producto al mercado con todos los sistemas operativos y de soporte necesarios",
+        "key_actions": [
+          "Infraestructura Productiva",
+          "Marketing y Ventas",
+          "Operaciones"
+        ],
+        "deliverables": [
+          "STARTUP_ACTIVA_PRODUCCION.pdf",
+          "PLAN_MARKETING_IMPLEMENTADO.pdf",
+          "SISTEMA_MONITOREO_ACTIVO.pdf"
+        ],
+        "agents": [
+          {
+            "id": "adan_ceo",
+            "name": "ADÁN",
+            "role": "Lead",
+            "responsibility": "Supervisión general"
+          },
+          {
+            "id": "gaby_community",
+            "name": "Gaby",
+            "role": "Community Manager",
+            "responsibility": "Gestión de comunidad"
+          },
+          {
+            "id": "eva_marketing",
+            "name": "EVA",
+            "role": "Chief Marketing Officer",
+            "responsibility": "Estrategia de marketing"
+          },
+          {
+            "id": "bella_branding",
+            "name": "Bella",
+            "role": "Branding Manager",
+            "responsibility": "Comunicación"
+          },
+          {
+            "id": "mila_scrum",
+            "name": "Mila",
+            "role": "Scrum Master",
+            "responsibility": "Coordinación"
+          },
+          {
+            "id": "ray_tech_architect",
+            "name": "Ray",
+            "role": "Technical Architect",
+            "responsibility": "Infraestructura"
+          },
+          {
+            "id": "sofia_success",
+            "name": "Sofia",
+            "role": "Customer Success Lead",
+            "responsibility": "Customer success"
+          },
+          {
+            "id": "jack_sales",
+            "name": "Jack",
+            "role": "Enterprise Sales Lead",
+            "responsibility": "Ventas enterprise"
+          },
+          {
+            "id": "maya_support",
+            "name": "Maya",
+            "role": "Support Operations Lead",
+            "responsibility": "Soporte 24/7"
+          }
+        ],
+        "advancement_condition": {
+          "validation": "Equipo ADÁN",
+          "systems_in_production": true,
+          "marketing_activated": true,
+          "support_operational": true,
+          "payment": "Costo del MVP"
+        }
+      }
+    ],
+    "agents_summary": {
+      "total_agents": 30,
+      "lead_agent": "ADÁN",
+      "agent_categories": {
+        "executive": ["ADÁN"],
+        "marketing": ["EVA", "Gaby", "Bella", "Kai", "Nia"],
+        "technical": ["Dany", "Ethan", "Dylan", "Isa", "Ray", "Alex", "Mia", "Kai Performance"],
+        "product": ["Ema", "Julia", "Tom", "Ana"],
+        "financial": ["Sofia", "Noah", "Ben", "Zara"],
+        "investment": ["Liam", "Diego", "Luna"],
+        "administrative": ["Tita", "Elsy", "Milo", "Zoe", "Sam", "Leo"],
+        "strategic": ["Andu", "Goga", "Mila", "Oliver"],
+        "operational": ["Gaby", "Sofia Success", "Jack", "Maya"]
+      }
+    },
+    "moderation_system": {
+      "name": "Moderador EDEN",
+      "purpose": "Sistema de enrutamiento inteligente para el flujo EDEN",
+      "capabilities": [
+        "Análisis automático de consultas",
+        "Identificación de nivel EDEN",
+        "Selección inteligente de agentes",
+        "Soporte para menciones explícitas",
+        "Enrutamiento basado en contexto"
+      ],
+      "response_format": {
+        "eden_level": "Nivel X - Nombre del Nivel",
+        "agents": ["agente1", "agente2"],
+        "reasoning": "Explicación de la selección",
+        "primary_agent": "agente_principal",
+        "confidence": 0.95,
+        "next_steps": ["paso1", "paso2"],
+        "deliverables": ["entregable1", "entregable2"]
+      }
+    }
+  }
+} 
